@@ -1,4 +1,4 @@
-
+Aplicação Modelo para elaboração de projeto de LGPD com relatórios padronizados
 Ao instalar o nodejs tem que alterar a variavel de ambiente path para dizer onde
 está instalado o node
 
