@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">    
+    <title>Document</title>
+</head>
+<body>
+
+  <!-- Refazer a função de logon como Fetch conforme testado e aprovado no projeto api-firebird 
+       módulo testeapi.html -->
+
+    <div id="container">
+
+        <div id="box">
+        <h2 style="text-align:center">Login</h2>   
+   
+        <!--action ="http://localhost:3010/logon"-->   
+        <form id="formLogon" method="post">   <!-- submitPostFormData({ nome: 'ADMIN', senha: '123'},'http://localhost:3010/logon')" --> 
+           
+            <div class="form-group">
+                <div class="   col-md-6 offset-md-3">
+                    <label > NOME </label>
+                    <input type="text" name="nome" id="nome" class="form-control" placeholder=" Nome de Usuário" required="" >    
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <div class="col-md-6 offset-md-3">
+                    <label> SENHA </label>  
+                    <input type="password" name="senha" id="senha" class="form-control" placeholder="SENHA" required="" >
+                </div>
+            </div>      
+            <br>
+            <div class="form-group">
+                <div class="col-md-6 offset-md-3">        
+                     <input class="btn btn-primary" type="submit" value="Enviar" onclick="alert('Enviado com sucesso!')">                  
+                    <!--
+                    <input type="button" value="Login" class="btn btn-primary" name="" >  
+                    <div class="form-check">
+                         <label > <input class="form-check-input" type="checkbox" value="" > Lembre-me  </label> 
+                    </div>
+                    -->
+
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+              <div class="col-md-6 offset-md-3">
+                <p id="msg"> </p>
+              </div>
+            </div>      
+         
+        </form> 
+       </div>
+
+    </div>
+    <br>
+
+   
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <!--  <script src='../public/javascripts/aws-script-cli.js'></script>   -->
+
+
+
+ <script>
+   
+      var form=document.getElementById('formLogon')
+      
+      form.addEventListener('submit', function(e){
+       e.preventDefault()
+       const _nome=document.getElementById('nome').value;
+       const _senha=document.getElementById('senha').value;
+       const _msg=document.getElementById("msg");
+       var _retorno='';
+        
+      alert('Submetendo o dados do formulário');
+
+       fetch('http://localhost:3010/users/logon', {
+        method: 'POST',
+        body: JSON.stringify({nome:_nome,senha:_senha}),
+        headers: {'Content-type': 'multipart/form-data; charset=UTF-8'}})
+           .then(function(response){ return response.json()})
+              .then(function(data){
+                 _retorno=data
+                // alert('tipo data '+typeof(_retorno));
+                // alert(_retorno.logon);
+                 if (_retorno.logon=='ok'){
+                     _msg.innerHTML = 'Conectado com Sucesso!';
+                     //alert('redirecionando para '+_retorno.msg);
+                     window.location = _retorno.msg;
+                 }    
+                 else{ 
+                    _msg.innerHTML = _retorno.msg;
+                 }
+              })
+                 .catch(error => console.error('Error:', error)); 
+      });
+   </script>
+
+
+
+ <!--   
+ <script>
+
+
+ // Funcão para dar post nos forms
+ async function submitPostFormData(_data,cUrl){
+   let _body=JSON.stringify(_data);
+   const options = {
+      method: "POST",
+      /*
+      body: Object.keys(body)
+        .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(body[k])}`)
+        .join('&'),
+      */
+      body:_body,  
+      headers: {"Content-Type":"application/json; charset=UTF-8"}
+    };
+
+    alert(body);
+
+     await fetch(cUrl, options) //,{ mode: 'no-cors' })
+       .then(response => {
+          // valida se a requisição falhou
+          if (!response.ok) {
+             console.log('Falha na requisição!') // cairá no catch da promise
+             return
+           }
+          // verificando pelo status
+           if (response.status === 404) {
+             condole.log('Erro 404 Página não encontrada!')
+             return
+           }
+          // retorna uma promise com os dados em JSON
+          return response.json()
+      })
+      .catch((err ) => console.log(err));
+      return
+      }
+// função somente para teste
+/*  
+function sendData(){
+   alert('ponte que partil!!!');
+   return    
+}
+*/
+
+function sendData() {
+  // (A) GET FORM DATA
+  var data = new FormData();
+  data.append("nome", document.getElementById("nome").value);
+  data.append("senha", document.getElementById("senha").value);
+
+  data=stringify(data);
+  alert('sendData');
+  //alert(Object.keys(data).map(k => `${encodeURIComponent(k)}=${encodeURIComponent(data[k])}`).join('&'));
+    
+  // (B) INIT FETCH POST
+  fetch("http://localhost:3010/logon", {
+    method: "GET",
+    headers: {'Content-Type':'application/x-www-form-urlencoded'}, // this line is important, if this content-type is not set it wont work
+    body: Object.keys(data)
+        .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(data[k])}`)
+        .join('&')
+  })
+  
+  // (C) RETURN SERVER RESPONSE AS TEXT
+  .then((result) => {
+    if (result.status != 200) { throw new Error("Bad Server Response"); }
+    return result.text();
+  })
+ 
+  // (D) SERVER RESPONSE
+  .then((response) => {
+    console.log(response);
+  })
+ 
+  // (E) HANDLE ERRORS - OPTIONAL
+  .catch((error) => { console.log(error); });
+ 
+  // (F) PREVENT FORM SUBMIT
+  return false;
+}
+
+      </script>
+
+    -->      
+
+</body>
+</html>

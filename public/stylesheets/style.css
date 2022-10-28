@@ -1,0 +1,77 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #082767;
+}
+
+
+ #box {
+  width: 400px;
+  height: 280px;
+  background: rgb(103, 100, 238);
+  border:5px;
+  border-color:#082767
+  }
+
+  #box1 {
+    width: 500px;
+    height: 350px;
+    background: rgb(103, 100, 238);
+    border:5px;
+    border-color:#082767
+    }
+  
+
+.align-items-center{
+  display: flex;
+  align-items: center;
+}
+
+
+
+
+a {
+  color: #00B7FF;
+}
+
+#container {
+  width: 100vw;
+  height: 100vh;
+  background: #6C7A89;
+  background-color: #cccccc;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  /*background-image: url(/images/coracao_agua.jpg )*/  /*   /images/liflex.jpg);*/
+  }
+
+#container-big{
+  width: auto;
+  height: 700px  ;
+  max-width: 90%;
+  border: 0;
+  margin:1px;
+  background-image: url(/images/gdpr.png);
+  background-repeat: no-repeat;
+  background-color: #cccccc;
+  background-position: center;
+}
+
+#container-footer{
+  width: auto;
+  height: 300px  ;
+  max-width: 90%;
+  border: 0;
+  margin:1px;
+  padding-left: 10px;
+  background-color: #cccccc;
+  font: 12px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+
+
+/*
+ referência para imagens background-image: https://www.w3schools.com/cssref/pr_background-image.asp
+*/
